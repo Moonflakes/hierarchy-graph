@@ -15,7 +15,7 @@ const TreeNode = ({node}) => {
         hasChildren && setOpen(!open);
         context.setDataGraph(node)
         context.setSelectedNode(node.key)
-        }} selected={context.selectedNode === node.key}>
+        }} selected={context.selectedNode === node.key} sx={{ pl: 3 * node.level }}>
         <ListItemText primary={node.key} />
         {hasChildren && (open ? <ExpandLess /> : <ExpandMore />)}
       </ListItemButton>
@@ -34,7 +34,7 @@ const TreeNodeRoot = ({ data }) => {
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {data.map((node, i) => (
-        <TreeNode node={node} key={`${node.key}-${i}`} />
+        <TreeNode node={node} key={`${node.key}-${i}`} level={1} />
       ))}
     </List>
   );

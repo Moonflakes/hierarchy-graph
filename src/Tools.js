@@ -123,6 +123,7 @@ export const getHierarchy = (data, i) => {
     entries = entries.map((e) => {
       return {
         ...e,
+        level: i,
         values: nbLevel === i ? e.values : getHierarchy(e.values, i + 1),
         cumul: getCumulData(e.values, e.key),
       };
