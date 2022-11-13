@@ -4,18 +4,23 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { GraphContext } from "../GraphContext";
 
-const TreeNode = ({node}) => {
+const TreeNode = ({ node }) => {
   const [open, setOpen] = useState(false);
-  const hasChildren = !!node.values.filter(v => v.key).length;
+  const hasChildren = !!node.values.filter((v) => v.key).length;
   const context = useContext(GraphContext);
 
   return (
     <>
-      <ListItemButton key={node.key} onClick={() => {
-        hasChildren && setOpen(!open);
-        context.setDataGraph(node)
-        context.setSelectedNode(node.key)
-        }} selected={context.selectedNode === node.key} sx={{ pl: 3 * node.level }}>
+      <ListItemButton
+        key={node.key}
+        onClick={() => {
+          hasChildren && setOpen(!open);
+          context.setDataGraph(node);
+          context.setSelectedNode(node.key);
+        }}
+        selected={context.selectedNode === node.key}
+        sx={{ pl: 3 * node.level }}
+      >
         <ListItemText primary={node.key} />
         {hasChildren && (open ? <ExpandLess /> : <ExpandMore />)}
       </ListItemButton>

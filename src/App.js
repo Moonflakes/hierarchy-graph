@@ -1,11 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import TreeNodeRoot from "./components/Tree";
 import { GraphContext } from "./GraphContext";
-import { Grid, Button } from "@mui/material";
-
-import Papa from "papaparse";
+import { Grid } from "@mui/material";
 import Chart from "./components/LineChart";
-import { getHierarchy, verifData } from "./Tools";
+import UploadButton from "./components/UploadButton";
 
 function App() {
   // Init states
@@ -14,26 +12,7 @@ function App() {
   );
   const [hierarchy, setHierarchy] = useState([]);
   const [dataGraph, setDataGraph] = useState({});
-  const [selectedNode, setSelectedNode] = useState({});
-
-  // Use ref to associate button component click to input change
-  const inputRef = useRef();
-
-  const changeHandler = (event) => {
-    // Passing file data to parse using Papa.parse
-    Papa.parse(event.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        // Verif data
-        setVerifHierarchy(verifData(results.data));
-        // Parsed Data Response in array hierarchy
-        verifHierarchy && setHierarchy([...getHierarchy(results.data, 1)]);
-      },
-    });
-    //Reset input value
-    event.target.value = null;
-  };
+  const [selectedNode, setSelectedNode] = useState(null);
 
   //Setup data graph context
   const graphContextValues = {
@@ -45,28 +24,18 @@ function App() {
 
   return (
     <div className="App">
-      {/* File Uploader */}
-      <Grid container justifyContent="center">
-        <Grid item style={{ margin: "30px" }}>
-          <Button
-            variant="contained"
-            component="label"
-            onKeyDown={(e) => e.keyCode === 32 && inputRef.current?.click()}
-          >
-            Upload File
-            <input
-              ref={inputRef}
-              type="file"
-              name="file"
-              onChange={changeHandler}
-              accept=".csv"
-              hidden
-            />
-          </Button>
-        </Grid>
-      </Grid>
-
       <GraphContext.Provider value={graphContextValues}>
+        {/* File Uploader */}
+        <Grid container justifyContent="center">
+          <Grid item style={{ margin: "30px" }}>
+            <UploadButton
+              setHierarchy={setHierarchy}
+              setVerifHierarchy={setVerifHierarchy}
+              verifHierarchy={verifHierarchy}
+            />
+          </Grid>
+        </Grid>
+
         <Grid container>
           {verifHierarchy !== 1 ? (
             <>

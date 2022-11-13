@@ -59,6 +59,7 @@ const Chart = () => {
     if (dataGraph.cumul) {
       d3.select(svgRef.current)
         .select("path")
+        .attr("opacity", "1")
         .attr("d", (value) => line(dataGraph.cumul))
         .attr("fill", "none")
         .attr("stroke", "black");
@@ -96,6 +97,9 @@ const Chart = () => {
             .text(`Ventes: ${d.value}`);
         })
         .on("mouseleave", () => d3.select(".tooltip").remove());
+    } else {
+      d3.select("path").attr("opacity", "0");
+      d3.selectAll("circle").remove();
     }
   }, [dataGraph]);
 
