@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { List, ListItemButton, ListItemText, Collapse } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -14,7 +14,8 @@ const TreeNode = ({node}) => {
       <ListItemButton key={node.key} onClick={() => {
         hasChildren && setOpen(!open);
         context.setDataGraph(node)
-        }}>
+        context.setSelectedNode(node.key)
+        }} selected={context.selectedNode === node.key}>
         <ListItemText primary={node.key} />
         {hasChildren && (open ? <ExpandLess /> : <ExpandMore />)}
       </ListItemButton>

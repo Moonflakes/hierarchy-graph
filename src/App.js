@@ -14,6 +14,7 @@ function App() {
   );
   const [hierarchy, setHierarchy] = useState([]);
   const [dataGraph, setDataGraph] = useState({});
+  const [selectedNode, setSelectedNode] = useState({});
 
   // Use ref to associate button component click to input change
   const inputRef = useRef();
@@ -38,6 +39,8 @@ function App() {
   const graphContextValues = {
     setDataGraph: setDataGraph,
     dataGraph: dataGraph,
+    setSelectedNode: setSelectedNode,
+    selectedNode: selectedNode,
   };
 
   return (
