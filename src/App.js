@@ -36,7 +36,7 @@ function App() {
           </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid container justifyContent="normal">
           {verifHierarchy !== 1 ? (
             <>
               {/* Error sentence */}
@@ -47,11 +47,11 @@ function App() {
           ) : (
             <>
               {/* Hierarchy list */}
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={5}>
                 <TreeNodeRoot data={hierarchy} />
               </Grid>
               {/* Node graph data */}
-              <Grid item xs={12} md={8}>
+              <Grid container item xs={12} md={7} justifyContent="center">
                 <Chart />
               </Grid>
             </>

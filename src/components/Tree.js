@@ -37,7 +37,7 @@ const TreeNode = ({ node }) => {
 
 const TreeNodeRoot = ({ data }) => {
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%" }}>
       {data.map((node, i) => (
         <TreeNode node={node} key={`${node.key}-${i}`} level={1} />
       ))}
