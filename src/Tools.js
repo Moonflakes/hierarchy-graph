@@ -21,23 +21,24 @@ const getCumulData = (data, key) => {
 };
 
 const hasDuplicates = (array) => {
-    return new Set(array).size !== array.length;
+  return new Set(array).size !== array.length;
 };
 
 const isWellFormatted = ({ value, key, regexKey, regexValue }) => {
-    if (key.match(regexKey)) {
-        if (typeof value !== "string") return false;
-        if (key === "date" && value.match(regexValue) && isNaN(Date.parse(value)))
-        return false;
-        if (key === "ventes" && !value.match(regexValue)) return false;
-    }
-    return true;
+  if (key.match(regexKey)) {
+    if (typeof value !== "string") return false;
+    if (key === "date" && value.match(regexValue) && isNaN(Date.parse(value)))
+      return false;
+    if (key === "ventes" && !value.match(regexValue)) return false;
+  }
+  return true;
 };
 
 // VERIFICATIONS
 // data exist
 // has good labels,
 // level is string,
+// level labels are sort by asc
 // date is valid date and is string dd/mm/yyyy,
 // value is number
 // there is one date label
@@ -47,15 +48,19 @@ export const verifData = (data) => {
   if (!data.length) return "Please upload your hierarchy file.";
 
   for (let i = 0; i < data.length; i++) {
-    const levelsLabels = Object.keys(data[i]).filter((key) =>
+    const levelLabels = Object.keys(data[i]).filter((key) =>
       key.match(/^niveau_\d+$/)
     );
-    const hasLevelsLabels = !!levelsLabels.length;
-    if (!hasLevelsLabels)
+    const hasLevelLabels = !!levelLabels.length;
+    if (!hasLevelLabels)
       return 'Level labels are not well formatted -> like "niveau_n+i"';
-    const hasDuplicatesLevelsLabels = hasDuplicates(levelsLabels);
-    if (hasDuplicatesLevelsLabels)
+    const hasDuplicatesLevelLabels = hasDuplicates(levelLabels);
+    if (hasDuplicatesLevelLabels)
       return "Level labels are duplicated, you must have one value for each product";
+    const isLevelLabelsSortByAsc = levelLabels.every((x, i) => {
+      return i === 0 || x >= levelLabels[i - 1];
+    });
+    if (!isLevelLabelsSortByAsc) return "Level labels are not sort by asc";
 
     const dateLabel = Object.keys(data[i]).filter((key) => key === "date");
     const hasDateLabel = !!dateLabel.length;
