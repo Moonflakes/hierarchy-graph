@@ -36,8 +36,7 @@ const TreeNode = ({ node }) => {
           onClick={() => {
             hasChildren && setOpen(!open);
           }}
-          selected={context.selectedNode === node.key}
-          sx={{ pl: 3 * node.level }}
+          selected={context.selectedNode === node.key}          
         >
           <ListItemText primary={node.key} />
           {hasChildren && (open ? <ExpandLess /> : <ExpandMore />)}
