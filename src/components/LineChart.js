@@ -64,10 +64,11 @@ const Chart = () => {
         .attr("fill", "none")
         .attr("stroke", "black");
 
-      d3.select(svgRef.current).selectAll("circle").remove();
+      d3.select(svgRef.current).selectAll(".points").remove();
       // Add points
       d3.select(svgRef.current)
         .append("g")
+        .attr('class', 'points')
         .selectAll("dot")
         .data(dataGraph.cumul)
         .enter()
@@ -98,14 +99,14 @@ const Chart = () => {
         })
         .on("mouseleave", () => d3.select(".tooltip").remove());
     } else {
-      d3.select("path").attr("opacity", "0");
-      d3.selectAll("circle").remove();
+      d3.select(".line").attr("opacity", "0");
+      d3.selectAll(".points").remove();
     }
   }, [dataGraph]);
 
   return (
     <svg id="chart" ref={svgRef} viewBox={`0 0 ${width} ${height}`}>
-      <path d="" fill="none" stroke="black" strokeWidth="1" />
+      <path class="line" d="" fill="none" stroke="black" strokeWidth="1" />
       <g ref={xAxisRef} transform={`translate(0,${height - padding})`} />
       <g ref={yAxisRef} transform={`translate(${padding},0)`} />
     </svg>
